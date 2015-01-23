@@ -46,7 +46,7 @@ function getProduct() {
 
 function generateSentence(product) {
   var dfd = new _.Deferred();
-  var filename = "data/filler.json"
+  var filename = "data/text.json"
   fs.readFile(filename, 'utf8', function(error, data) {
     var json = JSON.parse(data);
     var sections = ["intro", "query"];
@@ -119,6 +119,7 @@ function tweet() {
   getProduct().then(function(product) {
 
     return generateFiller(product);
+    // return generateSentence(product);
   }).then(function(myTweet) {
 
     console.log(myTweet);
