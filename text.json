@@ -1,0 +1,13 @@
+{
+  "intro":[
+    "Hey {{consumer.handle}},",
+    "Question for {{consumer.handle}}!",
+    "{{consumer.handle}}",
+    "I'm wondering something {{consumer.handle}}"
+    ],
+  "query":[
+    "really love this {{product.product_category}} - {{product.product_url}} - but what to match it with?",
+    "could you suggest a nice {{product.product_category}} for a fashion cheapskate ;)",
+    "I could use a new {{product.product_category}}, like yesterday! Suggestions?"
+  ]
+}

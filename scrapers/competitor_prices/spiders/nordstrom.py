@@ -95,8 +95,8 @@ class NordstromSpider(CrawlSpider):
     breadcrumbs = response.xpath("//nav[@id='breadcrumb-nav']/ul/li/a/text()").extract()
     category = response.xpath("//nav[@id='breadcrumb-nav']/ul/li/text()").extract()
     breadcrumbs = breadcrumbs + category
-    item['category'] = category[0]
+    item['product_category'] = category[0]
     item['breadcrumbs'] = "-".join(breadcrumbs)
-    item['product_url'] = response.xpath("//ul[contains(@class, 'image-thumb')]/li/button/img/src")
+    item['product_url'] = response.url
     
     return item

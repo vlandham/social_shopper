@@ -18,6 +18,6 @@ class Product(scrapy.Item):
   price_sale = scrapy.Field()
   image = scrapy.Field()
   condition = scrapy.Field()
-  category = scrapy.Field()
+  product_category = scrapy.Field()
   breadcrumbs = scrapy.Field() # unneeded? using just for nordstrom. 
   inventory = scrapy.Field()
