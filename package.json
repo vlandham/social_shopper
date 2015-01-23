@@ -1,0 +1,40 @@
+{
+  "name": "social_shopper",
+  "description": "Social Media is the best way to shop..",
+  "version": "0.1.0",
+  "homepage": "https://github.com/vlandham/social_shopper",
+  "author": {
+    "name": "Jim V",
+    "email": "jjj@jjj.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/vlandham/social_shopper.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vlandham/social_shopper/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/vlandham/social_shopper/blob/master/LICENSE-MIT"
+    }
+  ],
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "dependencies": {
+    "inflection": "~1.2.6",
+    "pos": "^0.1.7-2",
+    "twit": "~1.1.9",
+    "underscore": "~1.5.1",
+    "underscore.deferred": "~0.4.0",
+    "wordfilter": "*"
+  },
+  "devDependencies": {
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-contrib-watch": "~0.4.0",
+    "grunt-notify": "~0.2.18"
+  },
+  "keywords": []
+}
