@@ -107,7 +107,8 @@ function generateFiller() {
   fs.readFile(filename, 'utf8', function(error, data) {
     m.seed(data, function() {
       var word = m.pick();
-      var sentence = m.forward(word, 20);
+      console.log(word);
+      var sentence = m.fill(word, 15);
       var total = 0;
       sentence = sentence.filter(function(w) {
         total += w.length;
