@@ -1,4 +1,5 @@
 var _ = require('underscore');
+var argv = require('minimist')(process.argv.slice(2));
 _.mixin( require('underscore.deferred') );
 var inflection = require('inflection');
 var Twit = require('twit');
@@ -21,14 +22,26 @@ Array.prototype.pickRemove = function() {
   return this.splice(index,1)[0];
 };
 
+function getConsumer() {
+  var consumers = [
+    {'handle': "@Nordstrom",
+          'data': "data/nordstrom.jsonlines"},
+    {'handle': "@Macys",
+          'data': "data/macys.jsonlines"},
+    {'handle': "@Sephora",
+          'data': "data/sephora.jsonlines"}
+  ];
 
-function getProduct() {
+  return consumers[2];
+
+}
+
+function getProduct(consumer) {
   var dfd = new _.Deferred();
-  var filename = "data/nordstrom.jsonlines";
+  var filename = consumer.data;
   var products = [];
   fs.readFile(filename, 'utf8', function(error, data) {
     var lines = data.split("\n");
-    console.log(lines.length);
     lines.forEach(function(line) {
       try {
         var product = JSON.parse(line);
@@ -44,7 +57,7 @@ function getProduct() {
   return dfd.promise();
 }
 
-function generateSentence(product) {
+function generateSentence(product, consumer) {
   var dfd = new _.Deferred();
   var filename = "data/text.json"
   fs.readFile(filename, 'utf8', function(error, data) {
@@ -57,8 +70,9 @@ function generateSentence(product) {
 
     var template = handlebars.compile(sentence);
     var data = {'product':product,
-                'consumer': {'handle': "@Nordstrom"}
-    };
+                'consumer': consumer};
+
+    console.log(data);
     var result = template(data);
     dfd.resolve(result);
    
@@ -88,9 +102,9 @@ function generateSentence(product) {
 function generateFiller() {
   var dfd = new _.Deferred();
   var m = markov(2);
+
   var filename = "data/filler.txt"
   fs.readFile(filename, 'utf8', function(error, data) {
-    console.log(data.length)
     m.seed(data, function() {
       var word = m.pick();
       var sentence = m.forward(word, 20);
@@ -116,21 +130,27 @@ function generateFiller() {
 
 
 function tweet() {
-  getProduct().then(function(product) {
+  var consumer = getConsumer();
 
-    return generateFiller(product);
-    // return generateSentence(product);
+  getProduct(consumer).then(function(product) {
+    if(argv.f) {
+      return generateFiller(product);
+    } else {
+      return generateSentence(product, consumer);
+    }
   }).then(function(myTweet) {
 
     console.log(myTweet);
-    T.post('statuses/update', { status: myTweet }, function(err, reply) {
-      if (err) {
-        console.log('error:', err);
-      }
-      else {
-        console.log('reply:', reply);
-      }
-    });
+    if(!argv.t && !argv.test) {
+      T.post('statuses/update', { status: myTweet }, function(err, reply) {
+        if (err) {
+          console.log('error:', err);
+        }
+        else {
+          console.log('reply:', reply);
+        }
+      });
+    }
   });
 }
 
