@@ -32,7 +32,7 @@ function getConsumer() {
           'data': "data/sephora.jsonlines"}
   ];
 
-  return consumers[2];
+  return consumers[1];
 
 }
 
