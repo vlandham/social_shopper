@@ -32,7 +32,7 @@ function getConsumer() {
           'data': "data/sephora.jsonlines"}
   ];
 
-  return consumers[1];
+  return _.sample(consumers);
 
 }
 
@@ -41,7 +41,7 @@ function getProduct(consumer) {
   var filename = consumer.data;
   var products = [];
   fs.readFile(filename, 'utf8', function(error, data) {
-    var lines = data.split("\n");
+    var lines = data.split('\n');
     lines.forEach(function(line) {
       try {
         var product = JSON.parse(line);
